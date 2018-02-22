@@ -1,12 +1,10 @@
 package xyz;
 import javax.swing.JOptionPane;
 import java.sql.*;
-
 public class OpenDataDialog extends javax.swing.JFrame {
     public OpenDataDialog() {
         initComponents();
     }
-    
     public boolean checkExistance(String dbname)
     {
         try
@@ -17,10 +15,7 @@ public class OpenDataDialog extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null,"Database Does not Exist");
             return false;
-        }
-        return true;
-    }   
-    
+        }  return true;}
     public boolean checkConnection(String dbname,String user,String pass)
     {
         try
@@ -35,7 +30,7 @@ public class OpenDataDialog extends javax.swing.JFrame {
         }
         return true;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -51,13 +46,9 @@ public class OpenDataDialog extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Open Database");
         setAlwaysOnTop(true);
-
         jLabel1.setText("Database Name:-");
-
         jLabel2.setText("Username:-");
-
         jLabel3.setText("Password:-");
-
         jButton1.setText("Open");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,10 +100,8 @@ public class OpenDataDialog extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addContainerGap(58, Short.MAX_VALUE))
         );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String dbname,user,pass;
         dbname=jTextField1.getText();
@@ -126,10 +115,13 @@ public class OpenDataDialog extends javax.swing.JFrame {
         {
             return ;
         }
-        new DatabaseInit(dbname,user,pass);
+        opendb(dbname,user,pass);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    public static void opendb(String db,String user,String pass)
+    {
+        new DatabaseInit(db,user,pass);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -9,51 +9,57 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JScrollPane;
 import javax.swing.ButtonGroup;
-
-public class DatabaseInit implements ActionListener 
+public class DatabaseInit implements ActionListener
 {
     boolean f=false;
     Connection cn;
-    JPanel panel1,panel2;
+    public static JPanel panel1,panel2;
     public static String Dbname,User,Pass;
     JButton perm,ntable;
-    int usedlength,tablesize;
-    ButtonGroup butgroup;
-    String s[]=new String[50];
-    CheckTable cktable[]=new CheckTable[50];
+    private static int usedlength,tablesize=0;
+    private static ButtonGroup butgroup;
+    private static String s[]=new String[50];
+    private static CheckTable cktable[]=new CheckTable[50];
     public void insertTables()
     {
         try
         {
-            Details.command = "show tables";
+           Details.command = "show tables";
             ResultSet rs = Details.st.executeQuery(Details.command);
+            tablesize=0;
             while(rs.next())
             {
-                s[tablesize]=rs.getString(1);
-                cktable[tablesize]=new CheckTable(s[tablesize]);
-                cktable[tablesize].setBounds(50,usedlength,200,25);
-                panel1.add(cktable[tablesize]);
-                butgroup.add(cktable[tablesize]);
+                s[tablesize++]=rs.getString(1);
+            }
+            int i=0;
+            for(i=0;i<tablesize;i++)
+            {
+                cktable[i]=new CheckTable(s[i]);
+                cktable[i].setBounds(50,usedlength,200,25);
+                panel1.add(cktable[i]);
+                butgroup.add(cktable[i]);
                 usedlength+=35;
-                tablesize++;
             }
             Data.MetaPane.setViewportView(panel1);
             Data.MetaPane.setPreferredSize(new Dimension(400,700));
             Data.MetaPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-            //Data.MetaPane.revalidate();
+            Data.MetaPane.validate();
+            Data.MetaPane.repaint();
+            Data.MetaPane.enable(true);
         }
         catch(SQLException e)
         {
-            
-        }            
-        
+        }
     }
     DatabaseInit(String dbname,String user,String pass)
     {
+        Details.displaypanel = new DisplayPanel();
+        Data.DisplayPane.setViewportView(Details.displaypanel);
         Dbname=dbname;
         User=user;
         Pass=pass;
         panel1=new JPanel();
+        panel1.setSize(400,700);
         panel2=new JPanel();
         butgroup=new ButtonGroup();
         initpanel1();
@@ -88,7 +94,7 @@ public class DatabaseInit implements ActionListener
             {
                 Connection cn= DriverManager.getConnection("jdbc:mysql://localhost:3306/" + Dbname ,User,Pass);
                 String line;
-                   Statement st=cn.createStatement();
+                Statement st=cn.createStatement();
                 line="grant all privileges on " + Dbname +".* to 'DUI'@'localhost' identified by 'DUI'" ;
                 st.executeUpdate(line);
                 line="revoke all privileges on " + Dbname +".* from 'DUI'@'localhost' identified by 'DUI'" ;
@@ -96,14 +102,25 @@ public class DatabaseInit implements ActionListener
             }
             catch(SQLException exc)
             {
-                JOptionPane.showMessageDialog(null,"Current user does'nt have the permissions");
+                JOptionPane.showMessageDialog(null,"Current user doesn't have the permissions");
                 return ;
             }
             new perm(Dbname,User,Pass);
         }
         else if(active==ntable)
         {
-            //newTable();
-        }            
+            new createtable();
+        }
+    }
+    public static void addIntoPanel(String tbname )
+    {
+        s[tablesize] = tbname;
+        cktable[tablesize]=new CheckTable(s[tablesize]);
+        cktable[tablesize].setBounds(50,usedlength,200,25);
+        panel1.add(cktable[tablesize]);
+        butgroup.add(cktable[tablesize]);
+        usedlength+=35;
+        tablesize++;
+        panel1.repaint();
     }
 }

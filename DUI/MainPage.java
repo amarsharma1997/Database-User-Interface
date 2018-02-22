@@ -1,5 +1,4 @@
 package xyz;
-
 import javax.swing.JScrollPane;
 import javax.swing.JFileChooser;
 import java.io.File;
@@ -7,10 +6,9 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import java.awt.event.*;
-
-public class MainPage extends javax.swing.JFrame 
+public class MainPage extends javax.swing.JFrame
 {
-    public MainPage() 
+    public MainPage()
     {
         setState(JFrame.NORMAL);
         initComponents();
@@ -78,8 +76,8 @@ public class MainPage extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -96,16 +94,16 @@ public class MainPage extends javax.swing.JFrame
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new OpenDataDialog().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-    
-    
-    public static void main(String args[]) 
+
+
+    public static void main(String args[])
     {
-        Details.MP=new MainPage();
-       
+       Details.MP =new MainPage();
+
     }
-    
-    
-    
+
+
+
     public static boolean checkInit()
     {
         Details.addressdir=new JFileChooser().getFileSystemView().getDefaultDirectory().toString()+"\\DatabaseUserInterface";
@@ -135,7 +133,7 @@ public class MainPage extends javax.swing.JFrame
         catch(SQLException e)
         {
             JOptionPane.showMessageDialog(null,"Start the server first.");
-            return false;    
+            return false;
         }
         file.mkdir();
         return true;
@@ -144,6 +142,5 @@ public class MainPage extends javax.swing.JFrame
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    // End of variables declaration//GEN-END:variables
+    private javax.swing.JScrollPane jScrollPane2;// End of variables declaration//GEN-END:variables}
 }

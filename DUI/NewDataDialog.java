@@ -1,9 +1,7 @@
 package xyz;
-
 import javax.swing.JOptionPane;
 import java.sql.*;
-
-public class NewDataDialog extends javax.swing.JFrame 
+public class NewDataDialog extends javax.swing.JFrame
 {
     public NewDataDialog() {
         initComponents();
@@ -11,7 +9,6 @@ public class NewDataDialog extends javax.swing.JFrame
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -20,34 +17,27 @@ public class NewDataDialog extends javax.swing.JFrame
         jCheckBox1 = new javax.swing.JCheckBox();
         jPasswordField1 = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create New Database");
         setAlwaysOnTop(true);
         setLocation(new java.awt.Point(0, 0));
-
         jLabel1.setText("Database Name:-");
         jLabel1.setName(""); // NOI18N
-
         jLabel2.setText("UserName:-");
-
         jLabel3.setText("Password:-");
-
         jCheckBox1.setText("New User");
-
         jButton1.setText("Create ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -88,16 +78,13 @@ public class NewDataDialog extends javax.swing.JFrame
                 .addComponent(jButton1)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String user=jTextField2.getText(),pass=new String(jPasswordField1.getPassword()),dbname=jTextField1.getText();
         Statement stmt;
         String command;
         Connection cn;
-        
         if(dbname.length()==0||user.length()==0)
         {
                 JOptionPane.showMessageDialog(null,"Fields are empty");
@@ -110,7 +97,8 @@ public class NewDataDialog extends javax.swing.JFrame
             return ;
         }
         catch(SQLException e)
-        {}
+        {
+        }
         if(jCheckBox1.isSelected()==true)
         {
             if(user.length()==0)
@@ -160,13 +148,15 @@ public class NewDataDialog extends javax.swing.JFrame
             Details.st.executeUpdate(command);
             command = "grant grant option on " + dbname + ".* to '" + user + "'@'localhost' " + "identified by '" + pass + "'";
             Details.st.executeUpdate(command);
+            Details.cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+dbname, user ,pass);
+            Details.st=Details.cn.createStatement();
         }
         catch(SQLException e)
         {
             JOptionPane.showMessageDialog(null,"Some error occured");
             return ;
         }
-        new DatabaseInit(dbname,user,pass);
+        OpenDataDialog.opendb(dbname,user,pass);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
